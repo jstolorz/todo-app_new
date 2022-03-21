@@ -12,7 +12,6 @@ public class Task {
     private int id;
 
     @NotBlank(message = "Task's description must be not null")
-    @Column(name = "desc")
     private String description;
 
     private boolean done;
@@ -24,7 +23,7 @@ public class Task {
         return id;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

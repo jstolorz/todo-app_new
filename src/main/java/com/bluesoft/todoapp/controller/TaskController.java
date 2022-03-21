@@ -44,6 +44,8 @@ class TaskController {
             return ResponseEntity.notFound().build();
         }
 
+        toUpdate.setId(id);
+
         repository.save(toUpdate);
         return ResponseEntity.noContent().build();
     }

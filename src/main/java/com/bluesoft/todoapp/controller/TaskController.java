@@ -32,6 +32,12 @@ class TaskController {
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
 
+    @PostMapping("/tasks")
+    ResponseEntity<?> createNotes(@RequestBody Task task){
+        repository.save(task);
+        return ResponseEntity.status(201).build();
+    }
+
     @PutMapping("/tasks/{id}")
     ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody Task toUpdate){
         if(!repository.existsById(id)){

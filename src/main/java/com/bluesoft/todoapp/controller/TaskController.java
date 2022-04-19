@@ -1,6 +1,5 @@
 package com.bluesoft.todoapp.controller;
 
-import com.bluesoft.todoapp.model.Note;
 import com.bluesoft.todoapp.model.Task;
 import com.bluesoft.todoapp.model.TaskRepository;
 import org.slf4j.Logger;

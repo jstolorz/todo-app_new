@@ -2,31 +2,27 @@ package com.bluesoft.todoapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "tasks")
-public class Task{
+@Table(name = "task_groups")
+public class TaskGroups {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Task's description must be not null")
+    @NotBlank(message = "Task groups description must be not null")
     private String description;
     private boolean done;
-    private LocalDateTime deadline;
-
     @Embedded
     private Audit audit = new Audit();
 
-    @ManyToOne
-    @JoinColumn(name = "task_group_id")
-    private TaskGroups group;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    private Set<Task> tasks;
 
-
-    Task() {
+    TaskGroups() {
     }
 
     public int getId() {
@@ -53,20 +49,11 @@ public class Task{
         this.done = done;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    Set<Task> getTasks() {
+        return tasks;
     }
 
-    void setDeadline(final LocalDateTime deadline) {
-        this.deadline = deadline;
+    void setTasks(final Set<Task> tasks) {
+        this.tasks = tasks;
     }
-
-    public void updateFrom(final Task source){
-        description = source.description;
-        done = source.done;
-        deadline = source.deadline;
-    }
-
-
-
 }

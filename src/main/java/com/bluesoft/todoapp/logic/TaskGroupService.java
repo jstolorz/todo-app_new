@@ -1,6 +1,5 @@
 package com.bluesoft.todoapp.logic;
 
-import com.bluesoft.todoapp.TaskConfigurationProperties;
 import com.bluesoft.todoapp.model.TaskGroupRepository;
 import com.bluesoft.todoapp.model.TaskGroups;
 import com.bluesoft.todoapp.model.TaskRepository;

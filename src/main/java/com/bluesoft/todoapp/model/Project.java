@@ -32,7 +32,7 @@ public class Project {
         this.id = id;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 

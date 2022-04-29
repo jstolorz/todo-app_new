@@ -2,7 +2,6 @@ package com.bluesoft.todoapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -16,13 +15,22 @@ public class TaskGroups {
     @NotBlank(message = "Task groups description must be not null")
     private String description;
     private boolean done;
-    @Embedded
-    private Audit audit = new Audit();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     private Set<Task> tasks;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    TaskGroups() {
+    Project getProject() {
+        return project;
+    }
+
+    void setProject(final Project project) {
+        this.project = project;
+    }
+
+    public TaskGroups() {
     }
 
     public int getId() {
@@ -37,7 +45,7 @@ public class TaskGroups {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -49,11 +57,13 @@ public class TaskGroups {
         this.done = done;
     }
 
-    Set<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    void setTasks(final Set<Task> tasks) {
+    public void setTasks(final Set<Task> tasks) {
         this.tasks = tasks;
     }
+
+
 }

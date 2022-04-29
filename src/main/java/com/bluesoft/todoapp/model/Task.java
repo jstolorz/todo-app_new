@@ -2,7 +2,6 @@ package com.bluesoft.todoapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,50 +17,53 @@ public class Task{
     private boolean done;
     private LocalDateTime deadline;
 
-    @Embedded
-    private Audit audit = new Audit();
-
     @ManyToOne
     @JoinColumn(name = "task_group_id")
     private TaskGroups group;
 
 
-    Task() {
-    }
+     public Task() {
+     }
 
-    public int getId() {
+     public Task(final String description, final LocalDateTime deadline) {
+        this.description = description;
+        this.deadline = deadline;
+     }
+
+
+    int getId() {
         return id;
     }
 
-    void setId(int id) {
+     void setId(int id) {
         this.id = id;
     }
 
-    public String getDescription() {
+     public String getDescription() {
         return description;
     }
 
-    void setDescription(String description) {
+     void setDescription(String description) {
         this.description = description;
     }
 
-    public boolean isDone() {
+     public boolean isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+     public void setDone(boolean done) {
         this.done = done;
     }
 
-    public LocalDateTime getDeadline() {
+     public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    void setDeadline(final LocalDateTime deadline) {
+     void setDeadline(final LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
-    public void updateFrom(final Task source){
+     public void updateFrom(final Task source){
         description = source.description;
         done = source.done;
         deadline = source.deadline;

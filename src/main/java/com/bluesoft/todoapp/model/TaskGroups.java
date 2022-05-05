@@ -22,13 +22,7 @@ public class TaskGroups {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    Project getProject() {
-        return project;
-    }
 
-    void setProject(final Project project) {
-        this.project = project;
-    }
 
     public TaskGroups() {
     }
@@ -63,6 +57,14 @@ public class TaskGroups {
 
     public void setTasks(final Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(final Project project) {
+        this.project = project;
     }
 
 

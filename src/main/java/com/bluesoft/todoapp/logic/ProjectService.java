@@ -7,13 +7,11 @@ import com.bluesoft.todoapp.model.TaskGroupRepository;
 import com.bluesoft.todoapp.model.projection.GroupReadModel;
 import com.bluesoft.todoapp.model.projection.GroupTaskWriteModel;
 import com.bluesoft.todoapp.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -37,6 +35,11 @@ public class ProjectService {
     }
 
     public GroupReadModel createGroup(LocalDateTime deadline, int projectId){
+
+        if(!configurationProperties.getTemplate().isAllowMultipleTasks() && taskGroupRepository.existsByDoneIsFalseAndProject_Id(projectId)){
+            throw new IllegalStateException("Only one undone group from project is allowed");
+        }
+
         return projectRepository.findById(projectId)
                 .map(project -> {
                     var targetGroup = new GroupWriteModel();

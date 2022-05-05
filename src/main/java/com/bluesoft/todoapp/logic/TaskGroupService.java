@@ -5,12 +5,10 @@ import com.bluesoft.todoapp.model.TaskGroups;
 import com.bluesoft.todoapp.model.TaskRepository;
 import com.bluesoft.todoapp.model.projection.GroupReadModel;
 import com.bluesoft.todoapp.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 public class TaskGroupService {
 
     private final TaskRepository taskRepository;
@@ -43,6 +41,8 @@ public class TaskGroupService {
                 .orElseThrow(() -> new IllegalArgumentException("TaskGroup with given id not found!"));
 
          taskGroups.setDone(!taskGroups.isDone());
+
+         repository.save(taskGroups);
     }
 
 }

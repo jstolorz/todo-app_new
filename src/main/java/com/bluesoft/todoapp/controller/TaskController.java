@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tasks")
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
@@ -21,32 +22,40 @@ class TaskController {
         this.repository = repository;
     }
 
-    @GetMapping(value = "/tasks", params = {"!sort","!page","!size"})
+    @GetMapping(value = "/", params = {"!sort","!page","!size"})
     ResponseEntity<List<Task>> readAllTasks(){
         logger.warn("Exposing all the tasks");
         return ResponseEntity.ok(repository.findAll());
     }
 
-    @GetMapping("/tasks")
+    @GetMapping
     ResponseEntity<List<Task>> readAllTasks(Pageable page){
         logger.warn("Custom pageable");
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<Task> readTask(@PathVariable int id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/tasks")
+    @GetMapping("/search/done")
+    ResponseEntity<List<Task>> readDoneTasks(@RequestParam(defaultValue = "true") boolean state){
+        return ResponseEntity.ok(
+                repository.findByDone(state)
+        );
+    }
+
+
+    @PostMapping
     ResponseEntity<?> createNotes(@RequestBody Task task){
         repository.save(task);
         return ResponseEntity.status(201).build();
     }
 
-    @PutMapping("/tasks/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody Task toUpdate){
         if(!repository.existsById(id)){
             return ResponseEntity.notFound().build();
@@ -62,7 +71,7 @@ class TaskController {
     }
 
     @Transactional
-    @PatchMapping("/tasks/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> toggleTask(@PathVariable int id){
         if(!repository.existsById(id)){
             return ResponseEntity.notFound().build();

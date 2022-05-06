@@ -33,6 +33,13 @@ class TaskController {
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
 
+    @GetMapping("/tasks/{id}")
+    ResponseEntity<Task> readTask(@PathVariable int id) {
+        return repository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/tasks")
     ResponseEntity<?> createNotes(@RequestBody Task task){
         repository.save(task);

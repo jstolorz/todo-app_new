@@ -32,7 +32,12 @@ class TaskGroupController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e){
+    ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e){
         return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<?> handleIllegalStates(IllegalStateException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

@@ -1,31 +1,34 @@
 package com.bluesoft.todoapp.controller;
 
+import com.bluesoft.todoapp.logic.TaskService;
 import com.bluesoft.todoapp.model.Task;
 import com.bluesoft.todoapp.model.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/tasks")
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
+    private final TaskService service;
 
-    TaskController(final TaskRepository repository) {
+    TaskController(final TaskRepository repository, final TaskService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping(value = "/", params = {"!sort","!page","!size"})
-    ResponseEntity<List<Task>> readAllTasks(){
+    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks(){
         logger.warn("Exposing all the tasks");
-        return ResponseEntity.ok(repository.findAll());
+        return service.findAllAsync().thenApply(ResponseEntity::ok);
     }
 
     @GetMapping

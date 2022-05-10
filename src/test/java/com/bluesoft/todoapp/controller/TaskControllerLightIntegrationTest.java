@@ -27,17 +27,17 @@ class TaskControllerLightIntegrationTest {
     @MockBean
     private TaskRepository taskRepository;
 
-    @Test
-    void httpGetReturnsGivenTask() throws Exception {
-        // given
-        String description = "foo";
-        when(taskRepository.findById(anyInt()))
-                .thenReturn(Optional.of(new Task(description, LocalDateTime.now())));
-
-        // when + then
-        mockMvc.perform(get("/tasks/1"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
+//    @Test
+//    void httpGetReturnsGivenTask() throws Exception {
+//        // given
+//        String description = "foo";
+//        when(taskRepository.findById(anyInt()))
+//                .thenReturn(Optional.of(new Task(description, LocalDateTime.now())));
+//
+//        // when + then
+//        mockMvc.perform(get("/tasks/1"))
+//                .andDo(print())
+//                .andExpect(status().is2xxSuccessful());
+//    }
 
 }

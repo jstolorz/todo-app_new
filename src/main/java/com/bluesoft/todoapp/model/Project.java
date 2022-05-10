@@ -24,11 +24,11 @@ public class Project {
     public Project() {
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    void setId(final int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -36,15 +36,15 @@ public class Project {
         return description;
     }
 
-    void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    Set<TaskGroups> getGroups() {
+    public Set<TaskGroups> getGroups() {
         return groups;
     }
 
-    void setGroups(final Set<TaskGroups> groups) {
+    public void setGroups(final Set<TaskGroups> groups) {
         this.groups = groups;
     }
 
@@ -52,7 +52,7 @@ public class Project {
         return steps;
     }
 
-    void setSteps(final Set<ProjectStep> steps) {
+    public void setSteps(final Set<ProjectStep> steps) {
         this.steps = steps;
     }
 }

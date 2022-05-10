@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tod App: projects</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<!--/*@thymesVar id="project" type="com.bluesoft.todoapp.model.projection.ProjectWriteModel"*/-->
+  <form action="#" th:action="@{/projects}" method="post" th:object="${project}">
+      <fieldset>
+          <legend>Nowy Projekt</legend>
+          <label for="name">Opis</label>
+          <input type="text" id="name" th:field="*{description}">
+      </fieldset>
+      <fieldset th:each="step, stepStat : *{steps}">
+          <legend th:text="|Krok ${stepStat.index + 1}|"></legend>
+          <label for="k1">Opis</label>
+          <input type="text" id="k1" th:field="*{steps[__${stepStat.index}__].description}">
+          <label for="k2">Dni do końca projektu</label>
+          <input type="number" id="k2" th:field="*{steps[__${stepStat.index}__].daysToDeadline}">
+          <div>
+              <button type="submit" name="addStep">+</button>
+          </div>
+      </fieldset>
+      <button type="submit">Dodaj</button>
+      <button type="reset">Wyczyść</button>
+  </form>
+</body>
+</html>

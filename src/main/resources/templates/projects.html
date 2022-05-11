@@ -5,10 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tod App: projects</title>
     <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .Bd{
+            border: solid 1px black;
+        }
+
+        .P\(0\) {
+            padding: 0;
+        }
+
+        .P\(10px\) {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
+  <h1 th:if="${message != null}" th:text="${message}"></h1>
+  <!--/*@thymesVar id="projects" type="java.util.List<com.bluesoft.todoapp.model.Project>"*/-->
+  <dl th:each="project : ${projects}"  class="Bd P(10px)">
+      <dt th:text="${project.description}">...</dt>
+      <dd>
+          <ul class="P(0)">
+              <li th:each="step : ${project.steps}" th:text="|${step.description} (${step.daysToDeadline})|"></li>
+          </ul>
+      </dd>
+  </dl>
 <!--/*@thymesVar id="project" type="com.bluesoft.todoapp.model.projection.ProjectWriteModel"*/-->
   <form action="#" th:action="@{/projects}" method="post" th:object="${project}">
+      <p th:if="${#fields.hasErrors()}" th:errors="*{all}"></p>
       <fieldset>
           <legend>Nowy Projekt</legend>
           <label for="name">Opis</label>
